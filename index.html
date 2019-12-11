@@ -10,35 +10,43 @@
 </head>
 
 <body>
-  <div id="app-1">{{ message }}</div>
-  <div id="app-2">
-    <input type="text" v-model="message"></input>
-    <div class="error" v-if="error.require">必須項目です</div>
-    <div class="error" v-if="error.tooLong">短すぎます</div>
+  <div id="app">
+    <li v-for="item in items">
+      <p class="">{{item.name}}は{{item.price}}円</p>
+    </li>
   </div>
 
   <script>
-    var app1 = new Vue({
-      el: "#app-1",
-      data: { message: "Hello world!" }
-    })
-
-    var app2 = new Vue({
-      el: "#app-2",
-      watch: {
-        message: function (newVal, oldVal) {
-          this.error.require = (newVal.length < 1) ? true : false;
-          this.error.tooLong = (newVal.length > 5) ? true : false;
-        }
-      },
+    var vm = new Vue({
+      el: "#app",
       data: {
-        message: "Hello!",
-        error: {
-          require: false,
-          tooLong: false
+        items: [
+          {
+            name: 'みかん',
+            price: 100
+          },
+          {
+            name: 'もも',
+            price: 300
+          },
+          {
+            name: 'いちじく',
+            price: 500
+          },
+          {
+            name: 'メロン',
+            price: 1000
+          }
+        ]
+      },
+      computed: {
+        priceWithTax: function () {
+          return this.price * 1.08;
         }
       }
     })
+
+    window.vm = vm;
   </script>
 </body>
 
