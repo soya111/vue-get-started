@@ -10,38 +10,39 @@
 </head>
 
 <body>
-  <div id="app">
-    <li v-for="item in items">
-      <p class="">{{item.name}}は{{item.price}}円</p>
-    </li>
+  <!-- <div id="example"> -->
+  <div id="example" v-bind:style="{'border': (isValid ? '' : '1px solid red')}">
+    <p>名前{{name}}</p>
+    <p>
+      <input v-model="name">
+    </p>
+    <p v-show="!isValid">名前を入力してください。</p>
+    <p v-show="isValid">
+      <button v-on:click="sendData">送信</button>
+    </p>
+    <!-- <p v-show="ok">aaaaaaaaa</p> -->
   </div>
 
   <script>
     var vm = new Vue({
-      el: "#app",
+      el: "#example",
       data: {
-        items: [
-          {
-            name: 'みかん',
-            price: 100
-          },
-          {
-            name: 'もも',
-            price: 300
-          },
-          {
-            name: 'いちじく',
-            price: 500
-          },
-          {
-            name: 'メロン',
-            price: 1000
-          }
-        ]
+        name: "",
       },
       computed: {
-        priceWithTax: function () {
-          return this.price * 1.08;
+        isValid: function () {
+          return this.name.length > 0;
+        },
+        ok: function () {
+          return false;
+        }
+      },
+      methods: {
+        // updateName: function (event) {
+        //   this.name = event.target.value;
+        // },
+        sendData: function () {
+          alert(this.name);
         }
       }
     })
